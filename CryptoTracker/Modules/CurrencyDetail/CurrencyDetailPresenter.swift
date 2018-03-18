@@ -32,8 +32,9 @@ final class CurrencyDetailPresenter {
 extension CurrencyDetailPresenter: CurrencyDetailPresenterInterface {
     func loadHistory(for currency: Currency) {
         _interactor.loadHistory(for: currency) { (response) in
-            let values = response.currencyHistoryValues
-            print(values)
+            DispatchQueue.main.async {
+                self._view.updateHistory(with: response)
+            }
         }
     }
 }

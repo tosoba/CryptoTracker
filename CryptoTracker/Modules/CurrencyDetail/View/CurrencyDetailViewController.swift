@@ -10,7 +10,9 @@
 
 import UIKit
 
-final class CurrencyDetailViewController: UIViewController {
+final class CurrencyDetailViewController: UIViewController, CurrencyHistoryChartDelegate {
+    
+    var entries: [(Int, Double)] = []
     
     var currency: Currency!
 
@@ -24,10 +26,22 @@ final class CurrencyDetailViewController: UIViewController {
         super.viewDidLoad()
         presenter.loadHistory(for: currency)
     }
+    
+    private func addCurrencyHistoryChart() {
+        let chart = CurrencyHistoryChart(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height))
+        chart.delegate = self
+        self.view.addSubview(chart)
+    }
 	
 }
 
 // MARK: - Extensions -
 
 extension CurrencyDetailViewController: CurrencyDetailViewInterface {
+    func updateHistory(with response: CurrencyHistoryResponse) {
+        entries = response.currencyHistoryValues.map({ (historyValue) -> (Int, Double) in
+            return (historyValue.time, historyValue.close)
+        })
+        addCurrencyHistoryChart()
+    }
 }

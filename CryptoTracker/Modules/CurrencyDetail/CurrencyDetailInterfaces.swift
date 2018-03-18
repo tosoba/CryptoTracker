@@ -18,6 +18,7 @@ protocol CurrencyDetailWireframeInterface: WireframeInterface {
 }
 
 protocol CurrencyDetailViewInterface: ViewInterface {
+    func updateHistory(with response: CurrencyHistoryResponse)
 }
 
 protocol CurrencyDetailPresenterInterface: PresenterInterface {

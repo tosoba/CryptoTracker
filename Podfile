@@ -8,4 +8,6 @@ target 'CryptoTracker' do
   # Pods for CryptoTracker
   pod 'RxSwift',    '~> 4.0'
   pod 'RxCocoa',    '~> 4.0'
+  pod 'RealmSwift', '~> 2.10'
+  pod ‘ChartsRealm’,'~> 3.0.4'
 end
