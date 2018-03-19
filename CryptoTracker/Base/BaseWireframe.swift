@@ -9,6 +9,8 @@ enum Transition {
 protocol WireframeInterface: class {
     func popFromNavigationController(animated: Bool)
     func dismiss(animated: Bool)
+    
+    func showLoadingView()
 }
 
 class BaseWireframe {
@@ -43,4 +45,14 @@ extension BaseWireframe: WireframeInterface {
         navigationController.dismiss(animated: animated)
     }
 
+    func showLoadingView() {
+        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
+        alert.view.tintColor = UIColor.black
+        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = .gray
+        loadingIndicator.startAnimating()
+        alert.view.addSubview(loadingIndicator)
+        self.navigationController.present(alert, animated: true, completion: nil)
+    }
 }

@@ -12,6 +12,7 @@ import UIKit
 
 final class CurrencyDetailViewController: UIViewController, CurrencyHistoryChartDelegate {
     
+    @IBOutlet weak var chartContainerView: UIView!
     var entries: [(Int, Double)] = []
     
     var currency: Currency!
@@ -24,13 +25,14 @@ final class CurrencyDetailViewController: UIViewController, CurrencyHistoryChart
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = currency.symbol
         presenter.loadHistory(for: currency)
     }
     
     private func addCurrencyHistoryChart() {
-        let chart = CurrencyHistoryChart(frame: CGRect(x: 0.0, y: 0.0, width: self.view.frame.width, height: self.view.frame.height))
+        let chart = CurrencyHistoryChart(frame: CGRect(x: 10.0, y: 50.0, width: self.chartContainerView.frame.width - 20, height: self.chartContainerView.frame.height - 100))
         chart.delegate = self
-        self.view.addSubview(chart)
+        chartContainerView.addSubview(chart)
     }
 	
 }

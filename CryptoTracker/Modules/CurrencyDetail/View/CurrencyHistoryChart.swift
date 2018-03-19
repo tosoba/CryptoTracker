@@ -60,16 +60,29 @@ class CurrencyHistoryChart: UIView {
     private var chartView: LineChartView {
         let lineChartView = LineChartView()
         self.addSubview(lineChartView)
-        lineChartView.constraintAnchors(to: self, topConstant: 20)
+        lineChartView.constraintAnchors(to: self, topConstant: 20, bottomConstant: 20)
         lineChartView.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInSine)
         lineChartView.noDataTextColor = .white
         lineChartView.noDataText = "No historical currency value data."
         lineChartView.backgroundColor = .white
-        lineChartView.xAxis.labelPosition = .bottom
+        lineChartView.xAxis.labelPosition = .bottomInside
+        lineChartView.xAxis.wordWrapEnabled = true
         lineChartView.xAxis.drawGridLinesEnabled = false
-        lineChartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: delegate.entries.map({ (entry) -> String in
-            String(describing: entry.0)
+        lineChartView.xAxis.setLabelCount(delegate.entries.count, force: true)
+        let formatter = IndexAxisValueFormatter(values: delegate.entries.map({ (entry) -> String in
+            let date = NSDate(timeIntervalSince1970: Double(entry.0))
+            
+            let dayTimePeriodFormatter = DateFormatter()
+            dayTimePeriodFormatter.dateFormat = "MMM dd YYYY"
+            
+            let dateString = dayTimePeriodFormatter.string(from: date as Date)
+            return dateString
         }))
+        let xAxis = XAxis()
+        xAxis.valueFormatter = formatter
+        lineChartView.xAxis.valueFormatter = xAxis.valueFormatter
+        lineChartView.xAxis.centerAxisLabelsEnabled = true
+        lineChartView.xAxis.drawLabelsEnabled = true
         lineChartView.chartDescription?.enabled = false
         lineChartView.legend.enabled = true
         lineChartView.rightAxis.enabled = false

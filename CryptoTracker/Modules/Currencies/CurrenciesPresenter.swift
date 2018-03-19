@@ -25,25 +25,17 @@ final class CryptocurrencyPresenter {
         _view = view
         _interactor = interactor
     }
-    
-    private func showLoadingView() {
-        _wireframe.showLoadingView()
-    }
-    
-    private func hideLoadingView() {
-        _wireframe.hideLoadingView()
-    }
 }
 
 // MARK: - Extensions -
 
 extension CryptocurrencyPresenter: CurrenciesPresenterInterface {
     func loadCurrencies() {
-        showLoadingView()
+        _wireframe.showLoadingView()
         _interactor.loadCurrencies { (currencies) in
             let sorted = currencies.sortedByPriceUSD()
             self._view.updateCurrencies(sorted)
-            self.hideLoadingView()
+            self._wireframe.dismiss(animated: true)
         }
     }
     

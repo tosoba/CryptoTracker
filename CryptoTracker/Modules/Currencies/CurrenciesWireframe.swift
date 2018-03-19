@@ -50,19 +50,5 @@ extension CurrenciesWireframe: CurrenciesWireframeInterface {
         }
     }
     
-    func showLoadingView() {
-        let alert = UIAlertController(title: nil, message: "Loading...", preferredStyle: .alert)
-        alert.view.tintColor = UIColor.black
-        let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
-        loadingIndicator.hidesWhenStopped = true
-        loadingIndicator.activityIndicatorViewStyle = .gray
-        loadingIndicator.startAnimating()
-        alert.view.addSubview(loadingIndicator)
-        self.navigationController.present(alert, animated: true, completion: nil)
-    }
     
-    func hideLoadingView() {
-        self.dismiss(animated: true)
-        //self.dismiss(animated: true, completion: nil)
-    }
 }

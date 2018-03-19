@@ -25,16 +25,24 @@ final class CurrencyDetailPresenter {
         _view = view
         _interactor = interactor
     }
+    
+    private func hideLoadingView() {
+        self._wireframe.dismiss(animated: true)
+    }
 }
 
 // MARK: - Extensions -
 
 extension CurrencyDetailPresenter: CurrencyDetailPresenterInterface {
     func loadHistory(for currency: Currency) {
+        _wireframe.showLoadingView()
         _interactor.loadHistory(for: currency) { (response) in
             DispatchQueue.main.async {
                 self._view.updateHistory(with: response)
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
+                self.hideLoadingView()
+            })
         }
     }
 }

@@ -16,9 +16,6 @@ enum CurrenciesNavigationOption {
 
 protocol CurrenciesWireframeInterface: WireframeInterface {
     func navigate(to option: CurrenciesNavigationOption)
-    
-    func showLoadingView()
-    func hideLoadingView()
 }
 
 protocol CurrenciesViewInterface: ViewInterface {
